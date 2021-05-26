@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -14,8 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('published', 1)->get();
-        return view('posts.index', ['posts'=> $posts]);
+        $posts = Post::all();
+        return view('admin.posts.index', ['posts'=> $posts]);
     }
 
     /**
@@ -25,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -48,7 +49,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         
-        return view('posts.show', ['post'=> $post]);
+        return view('admin.posts.show', ['post'=> $post]);
     }
 
     /**

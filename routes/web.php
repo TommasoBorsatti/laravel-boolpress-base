@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PostController@index');
+Route::get('/', 'BlogController@index');
 
-Route::resource('posts', 'PostController');
+Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function() {
+    Route::resource('posts', 'PostController');
+});
