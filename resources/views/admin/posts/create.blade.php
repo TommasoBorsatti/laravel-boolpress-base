@@ -1,4 +1,6 @@
 
+@extends('layouts.base')
+
 @section('pageTitle')
 Crea un nuovo post
 @endsection

@@ -8,8 +8,9 @@
     <link rel="stylesheet" href={{asset('css/app.css')}}>
 </head>
 <body>
-    <h1>@yield('pageTitle')</h1>
+    
     <div class="container">
+        <h1>@yield('pageTitle')</h1>
         @yield('pageContent')
     </div>
 </body>

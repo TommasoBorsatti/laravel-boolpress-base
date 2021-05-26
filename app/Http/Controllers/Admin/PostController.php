@@ -3,11 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Post;
+use App\Tag;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+//Helper per operazioni su Strings
+use Illuminate\Support\Str;
+
 class PostController extends Controller
 {
+    //Dati per validazione salvati come Attributo
+    protected $validation = [
+        'date' => 'required|date',
+        'content' => 'required|string',
+        'image' => 'nullable|url'
+    ];
+
+
     /**
      * Display a listing of the resource.
      *
@@ -25,8 +38,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('admin.posts.create');
+    {   
+        $tags = Tag::all();
+        return view('admin.posts.create', ['tags'=> $tags]);
     }
 
     /**
@@ -37,7 +51,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = $this->validation;
+        $validation['title'] = 'required|string|max:255|unique:posts';
+        
+        // validation
+        $request->validate($this->validation);
+
+        $data = $request->all();
+        
+        // controllo checkbox
+        $data['published'] = !isset($data['published']) ? 0 : 1;
+        // imposto lo slug partendo dal title
+        $data['slug'] = Str::slug($data['title'], '-');
+
+        // Insert
+        $newPost = Post::create($data);    
+        
+        // aggiungo i tags
+      
+
+        // redirect
+        return redirect()->route('admin.posts.index');
     }
 
     /**
