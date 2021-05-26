@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {   
     //Mass Assignement
-    protected $guarded = [];
+    protected $guarded = ['tags'];
 
     //Funzione per relazione con Comments
     public function comments()
@@ -18,7 +18,7 @@ class Post extends Model
     //Funzione per relazione con Tags
     public function tags()
     {
-        return $this->belongsToMany('App\Tag');
+        return $this->belongsToMany('App\Tag', 'tag_post');
     }
 }
 
