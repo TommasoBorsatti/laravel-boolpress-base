@@ -55,7 +55,7 @@ class PostController extends Controller
         $validation['title'] = 'required|string|max:255|unique:posts';
         
         // validation
-        $request->validate($this->validation);
+        $request->validate($validation);
 
         $data = $request->all();
         
@@ -126,6 +126,11 @@ class PostController extends Controller
         $post->update($data);
 
         // aggiorno i tags
+
+        //controllo per rimozione di tutte le checkbox - solo nella Sync    
+        if(!isset($data['tags'])){
+            $data['tags']=[ ];
+        }
         $post->tags()->sync($data['tags']);
 
         // return
